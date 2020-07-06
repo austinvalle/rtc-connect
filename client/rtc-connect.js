@@ -1,7 +1,9 @@
-const DEBUG_AREA = document.querySelector('#debug-area');
+const DEBUG_AREA_TAG = document.querySelector('#debug-area');
+const LOCAL_VIDEO_TAG = document.querySelector('video');
+
 function debug(text) {
 	console.log(text);
-	DEBUG_AREA.textContent += `\n${text}`;
+	DEBUG_AREA_TAG.textContent += `\n${text}`;
 }
 
 function ready(callback) {
@@ -25,6 +27,8 @@ ready(function () {
 			debug(`INFO: Listing capabilities of '${track.kind}' stream from '${track.label}'`);
 			debug(`${JSON.stringify(track.getCapabilities(), undefined, 2)}`)
 		});
+
+		LOCAL_VIDEO_TAG.srcObject = stream;
 	}).catch(function (err) {
 		debug(`ERR: Couldn't setup local media - '${err.message}'`)
 	});
