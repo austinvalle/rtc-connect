@@ -76,6 +76,11 @@ async function joinCall() {
 		debug(`ERR: Couldn't setup local media - '${err.message}'`)
 	}
 
+
+	peerConnection.addEventListener('icegatheringstatechange', event => {
+		console.log(JSON.stringify(event));
+	});
+
 	peerConnection.addStream(stream);
 	await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
 	const answer = await peerConnection.createAnswer();
