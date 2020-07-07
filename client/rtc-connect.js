@@ -33,6 +33,9 @@ ready(async function () {
 			console.log('all connected');
 		}
 	});
+	peerConnection.addEventListener('icecandidateerror', event => {
+		console.error(event.errorText);
+	});
 });
 
 async function createCall() {
