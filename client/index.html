@@ -14,9 +14,15 @@
 
 <body>
 	<h1>RTC Connect</h1>
+	<button id="start-call">Start Call</button>
+	<button id="join-call">Join Call</button>
+	<br>
 	<video id="local-video"
 		   autoplay
 		   muted></video>
+	<br>
+	<textarea id="local-ice-config"
+			  disabled></textarea>
 	<div class="debug">
 		<h3>Debug Area</h3>
 		<pre id="debug-area"></pre>
