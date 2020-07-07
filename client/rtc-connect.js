@@ -52,7 +52,7 @@ async function createCall() {
 		await peerConnection.setLocalDescription(offer);
 
 		peerConnection.addEventListener('icecandidate', async (event) => {
-			if (event.candidate && !ICE_CONFIG_TEXT_AREA.innerHTML) {
+			if (!event.candidate) {
 				ICE_CONFIG_TEXT_AREA.textContent = JSON.stringify(peerConnection.localDescription);
 				ICE_CONFIG_TEXT_AREA.disabled = false;
 				ICE_CONFIG_TEXT_AREA.select();
@@ -64,11 +64,6 @@ async function createCall() {
 				await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
 			}
 		});
-
-		peerConnection.addEventListener('icegatheringstatechange', event => {
-			console.log(JSON.stringify(event));
-		});
-		console.log('done');
 	} catch (error) {
 		debug(`ERR: Couldn't establish connection - '${err.message}'`)
 	}
@@ -89,11 +84,6 @@ async function joinCall() {
 	await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
 	const answer = await peerConnection.createAnswer();
 	await peerConnection.setLocalDescription(answer);
-
-
-	peerConnection.addEventListener('icegatheringstatechange', event => {
-		console.log(JSON.stringify(event));
-	});
 
 	ICE_CONFIG_TEXT_AREA.textContent = JSON.stringify(peerConnection.localDescription);
 	ICE_CONFIG_TEXT_AREA.disabled = false;
