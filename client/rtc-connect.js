@@ -1,5 +1,5 @@
 const DEBUG_AREA_TAG = document.querySelector('#debug-area');
-const LOCAL_VIDEO_TAG = document.querySelector('video');
+const LOCAL_VIDEO_TAG = document.querySelector('video#local-video');
 
 function debug(text) {
 	console.log(text);
