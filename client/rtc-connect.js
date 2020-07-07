@@ -42,7 +42,7 @@ async function createCall() {
 		const offer = await peerConnection.createOffer();
 		await peerConnection.setLocalDescription(offer);
 
-		peerConnection.addEventListener('icecandidate', event => {
+		peerConnection.addEventListener('icecandidate', async (event) => {
 			if (event.candidate && !ICE_CONFIG_TEXT_AREA.innerHTML) {
 				ICE_CONFIG_TEXT_AREA.textContent = JSON.stringify(peerConnection.localDescription);
 				ICE_CONFIG_TEXT_AREA.disabled = false;
@@ -77,7 +77,7 @@ async function joinCall() {
 	}
 
 	peerConnection.addStream(stream);
-	const offer = await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
+	await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
 	const answer = await peerConnection.createAnswer();
 	await peerConnection.setLocalDescription(answer);
 
