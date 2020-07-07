@@ -27,6 +27,12 @@ function ready(callback) {
 ready(async function () {
 	START_CALL_BTN.addEventListener('click', createCall)
 	JOIN_CALL_BTN.addEventListener('click', joinCall)
+
+	peerConnection.addEventListener('connectionstatechange', event => {
+		if (peerConnection.connectionState === 'connected') {
+			console.log('all connected');
+		}
+	});
 });
 
 async function createCall() {
@@ -76,15 +82,15 @@ async function joinCall() {
 		debug(`ERR: Couldn't setup local media - '${err.message}'`)
 	}
 
-
-	peerConnection.addEventListener('icegatheringstatechange', event => {
-		console.log(JSON.stringify(event));
-	});
-
 	peerConnection.addStream(stream);
 	await peerConnection.setRemoteDescription(new RTCSessionDescription(offer));
 	const answer = await peerConnection.createAnswer();
 	await peerConnection.setLocalDescription(answer);
+
+
+	peerConnection.addEventListener('icegatheringstatechange', event => {
+		console.log(JSON.stringify(event));
+	});
 
 	ICE_CONFIG_TEXT_AREA.textContent = JSON.stringify(peerConnection.localDescription);
 	ICE_CONFIG_TEXT_AREA.disabled = false;
